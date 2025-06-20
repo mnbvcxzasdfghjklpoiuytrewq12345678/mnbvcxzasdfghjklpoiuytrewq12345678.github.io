@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Website Statis (Tanpa Animasi)</title>
+    <title>Halaman Website dengan Efek Klik (Perbaikan)</title>
 
     <!-- Memuat Font Inter dari Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,20 +36,84 @@
         }
 
         /* --- STYLING UNTUK MENU HEADER --- */
-        /* Gaya dasar untuk link menu */
-        .menu-link, .mobile-menu-link {
-            padding-bottom: 0.25rem; /* pb-1 */
+        .menu-link, .mobile-menu-link { 
+            padding-bottom: 0.25rem; 
+            transition: color 0.2s, border-color 0.2s;
         }
-        /* Gaya untuk link menu yang aktif (tanpa animasi) */
         .menu-link.active, .mobile-menu-link.active {
-            color: #ffcb05; /* text-accent */
-            font-weight: bold; /* font-bold */
-            border-bottom: 2px solid #ffcb05; /* border-b-2 border-accent */
+            color: #ffcb05; 
+            font-weight: bold; 
+            border-bottom: 2px solid #ffcb05;
         }
-        .mobile-menu-link.active {
-            display: inline-block;
+        .mobile-menu-link.active { display: inline-block; }
+
+        /* --- STYLING ANIMASI ZOOM SAAT DIKLIK --- */
+        .zoom-on-click {
+            transition: transform 0.15s ease-in-out, background-color 0.2s, color 0.2s; 
+            cursor: pointer;
+        }
+        .zoom-on-click.active {
+            transform: scale(1.05);
+        }
+
+        /* --- STYLING ANIMASI GESER SAAT SCROLL --- */
+        .slide-from-bottom, .slide-from-left, .slide-from-right {
+            opacity: 0;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .slide-from-bottom { transform: translateY(50px); }
+        .slide-from-left { transform: translateX(-50px); }
+        .slide-from-right { transform: translateX(50px); }
+        
+        .is-visible {
+            opacity: 1;
+            transform: none;
         }
         
+        /* --- GAYA 'HOVER' SAAT DIKLIK (ACTIVE STATE) --- */
+
+        /* 1. Card Pengurus */
+        .info-card.active {
+            background-color: #0973d6 !important; /* !important untuk menimpa bg-accent */
+        }
+        .info-card.active * {
+             color: #ffffff;
+        }
+
+        /* 2. Card Daftar Fitur 1 (Kuning) */
+        .yellow-card.active {
+            background-color: #0973d6;
+        }
+        .yellow-card.active * {
+            color: #ffffff;
+        }
+         .yellow-card.active .playstore-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        /* 3. Card Daftar Fitur 2,3 (Biru) */
+        .blue-card.active {
+            background-color: #ffcb05;
+        }
+        .blue-card.active * {
+            color: #000000;
+        }
+        .blue-card.active .icon-path {
+            stroke: #000000;
+        }
+
+        /* 4. Card Rilis Utama */
+        .news-card-main.active .news-card-main-inner {
+            background-color: #0973d6;
+        }
+        .news-card-main.active .news-card-main-inner * {
+            color: #ffffff;
+        }
+
+        /* 5. Teks List Rilis */
+        .news-list-item.active h4 {
+            color: #0973d6;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -58,21 +122,18 @@
     <header id="app-header" class="bg-gradient-to-r from-primary-dark to-primary shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-end md:justify-center">
-                <!-- Menu Desktop -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="menu-link active text-white text-lg">Home</a>
                     <a href="#" class="menu-link text-white text-lg">About</a>
                     <a href="#" class="menu-link text-white text-lg">Team</a>
                     <a href="#" class="menu-link text-white text-lg">Release</a>
                 </div>
-                <!-- Tombol Hamburger untuk Mobile -->
                 <div class="md:hidden">
                     <button id="hamburger-button" class="text-white focus:outline-none" aria-label="Buka Menu">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
-            <!-- Menu Mobile (Tersembunyi secara default) -->
             <div id="mobile-menu" class="hidden md:hidden h-[50vh] flex flex-col justify-center items-center gap-y-6">
                 <a href="#" class="mobile-menu-link active text-white text-lg">Home</a>
                 <a href="#" class="mobile-menu-link text-white text-lg">About</a>
@@ -90,35 +151,35 @@
                 <img src="https://media.giphy.com/media/3o7TKSha51ATTx9K7u/giphy.gif" alt="Animasi Latar Belakang" class="w-full h-full object-cover">
             </div>
             <div class="relative w-full h-full flex items-center justify-center">
-                <img src="https://placehold.co/600x300/ffffff/000000?text=Logo+Anda" alt="Gambar Utama Hero" class="h-1/2 w-auto">
+                <img src="https://placehold.co/600x300/ffffff/000000?text=Logo+Anda" alt="Gambar Utama Hero" class="h-1/2 w-auto zoom-on-click" data-group="hero-image">
             </div>
         </section>
         <!-- Akhir Hero Section -->
 
-        <!-- Awal Card Section 1: Data Statistik -->
+        <!-- Awal Card Section Pengurus -->
         <section id="card-section" class="py-16 md:py-24 bg-white overflow-hidden">
             <div class="container mx-auto px-6">
                 <div class="flex flex-wrap justify-center items-center gap-8">
                     <!-- Card 1 -->
-                    <div class="bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square">
+                    <div data-group="info-cards" class="info-card animate-on-scroll slide-from-bottom zoom-on-click bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square">
                         <div>
-                            <h2 class="text-5xl font-bold" data-target="17">+17</h2>
+                            <h2 class="text-5xl font-bold" data-target="17">+0</h2>
                             <h3 class="text-lg font-bold mt-2">PENGURUS CABANG</h3>
                         </div>
                         <p class="text-xs mt-4">Tingkat Kabupaten atau Kota</p>
                     </div>
                     <!-- Card 2 -->
-                    <div class="bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square">
+                    <div data-group="info-cards" class="info-card animate-on-scroll slide-from-bottom zoom-on-click bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square" style="transition-delay: 200ms;">
                         <div>
-                            <h2 class="text-5xl font-bold" data-target="49">+49</h2>
+                            <h2 class="text-5xl font-bold" data-target="49">+0</h2>
                             <h3 class="text-lg font-bold mt-2">PENGURUS KOMISARIAT</h3>
                         </div>
                         <p class="text-xs mt-4">Tingkat Kampus atau Institusi</p>
                     </div>
                     <!-- Card 3 -->
-                    <div class="bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square">
+                    <div data-group="info-cards" class="info-card animate-on-scroll slide-from-bottom zoom-on-click bg-accent text-black w-[90%] md:w-[30%] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center aspect-square" style="transition-delay: 400ms;">
                         <div>
-                            <h2 class="text-5xl font-bold" data-target="136">+136</h2>
+                            <h2 class="text-5xl font-bold" data-target="136">+0</h2>
                             <h3 class="text-lg font-bold mt-2">PENGURUS RAYON</h3>
                         </div>
                         <p class="text-xs mt-4">Tingkat Fakultas atau Jurusan</p>
@@ -128,28 +189,28 @@
         </section>
         <!-- Akhir Card Section 1 -->
 
-        <!-- Awal Section Info & Download -->
+        <!-- Awal Section Fitur Terbaik -->
         <section id="info-download-section" class="py-16 md:py-24 bg-white overflow-hidden">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center text-black mb-12">Fitur Terbaik</h2>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-                    <!-- Gambar Produk -->
-                    <div class="w-[75%] md:w-[15%] flex justify-center">
+                    <!-- Gambar Mobile -->
+                    <div data-group="content-items" class="animate-on-scroll slide-from-left zoom-on-click w-[50%] md:w-[15%] flex justify-center">
                         <img src="https://placehold.co/400x800/2918a9/ffffff?text=App+Screenshot" alt="Gambar Produk" class="rounded-lg shadow-2xl w-full">
                     </div>
                     <!-- Daftar Fitur -->
                     <div class="w-full md:w-[75%] flex flex-col items-center md:items-start gap-6">
                         <!-- Card Download Aplikasi -->
-                        <div class="bg-accent w-[90%] md:w-[30%] p-4 rounded-lg shadow-lg">
+                        <div data-group="content-items" class="yellow-card animate-on-scroll slide-from-right zoom-on-click bg-accent w-[90%] md:w-[30%] p-4 rounded-lg shadow-lg">
                             <div class="flex items-center gap-4 justify-center md:justify-start">
-                                <img src="https://images.icon-icons.com/1272/PNG/512/1497555625-social08_84889.png" alt="Google Play Icon" class="w-7 h-7 flex-shrink-0">
+                                <img src="https://images.icon-icons.com/1272/PNG/512/1497555625-social08_84889.png" alt="Google Play Icon" class="playstore-icon w-7 h-7 flex-shrink-0">
                                 <h3 class="text-lg font-bold text-black">Download Aplikasi</h3>
                             </div>
                         </div>
                         <!-- Card Galeri -->
-                        <div class="bg-primary w-[90%] md:w-full p-4 rounded-lg shadow-lg">
+                        <div data-group="content-items" class="blue-card animate-on-scroll slide-from-right zoom-on-click bg-primary w-[90%] md:w-full p-4 rounded-lg shadow-lg" style="transition-delay: 200ms;">
                            <div class="flex items-start gap-4">
-                                <svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path></svg>
+                                <svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path class="icon-path" stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path></svg>
                                 <div class="flex-grow">
                                     <h3 class="text-lg font-bold text-white text-left">Galeri Pergerakan</h3>
                                     <p class="text-xs text-white text-justify mt-2">Ruang dokumentasi dan apresiasi terhadap sejarah, perjuangan, serta dinamika kaderisasi PMII dari masa ke masa. Menjadi pusat pembelajaran sejarah gerakan mahasiswa berbasis keislaman dan kebangsaan di Indonesia.</p>
@@ -157,9 +218,9 @@
                             </div>
                         </div>
                         <!-- Card Produk -->
-                        <div class="bg-primary w-[90%] md:w-full p-4 rounded-lg shadow-lg">
+                        <div data-group="content-items" class="blue-card animate-on-scroll slide-from-right zoom-on-click bg-primary w-[90%] md:w-full p-4 rounded-lg shadow-lg" style="transition-delay: 400ms;">
                            <div class="flex items-start gap-4">
-                                <svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"></path></svg>
+                                <svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path class="icon-path" stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"></path></svg>
                                 <div class="flex-grow">
                                     <h3 class="text-lg font-bold text-white text-left">Produk Pergerakan</h3>
                                     <p class="text-xs text-white text-justify mt-2">Hasil konkret dari proses kaderisasi, dialektika pemikiran, dan aksi sosial oleh kader PMII. Produk ini bisa berupa buku, modul, riset, hingga program pemberdayaan yang mencerminkan nilai-nilai keislaman dan keindonesiaan.</p>
@@ -170,16 +231,16 @@
                 </div>
             </div>
         </section>
-        <!-- Akhir Section Info & Download -->
+        <!-- Akhir Section 2 -->
 
-        <!-- Awal Section Berita -->
+        <!-- Awal Section Rilis Terbaru -->
         <section id="news-section" class="py-16 md:py-24 bg-white overflow-hidden">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center mb-12 text-black">Rilis Terbaru</h2>
                 <div class="flex flex-col md:flex-row items-center md:items-start justify-center gap-8">
-                    <!-- Kolom Kiri: Card Berita Utama -->
-                    <div class="w-11/12 md:w-[20%] flex justify-center">
-                        <div class="w-full bg-white rounded-lg shadow-xl overflow-hidden aspect-square flex flex-col">
+                    <!-- Kolom Kiri: Card Rilis Utama -->
+                    <div data-group="news-items" class="news-card-main animate-on-scroll slide-from-left zoom-on-click w-11/12 md:w-[20%] flex justify-center">
+                        <div class="news-card-main-inner w-full bg-white rounded-lg shadow-xl overflow-hidden aspect-square flex flex-col">
                             <div class="w-full h-3/5 overflow-hidden">
                                 <img src="https://placehold.co/600x400/0973d6/ffffff?text=Gambar+Berita" alt="Gambar Berita Utama" class="w-full h-full object-cover">
                             </div>
@@ -188,18 +249,18 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Kolom Kanan: List Berita -->
+                    <!-- Kolom Kanan: List Rilis -->
                     <div class="w-11/12 md:w-[70%] flex flex-col justify-center mt-8 md:mt-0">
-                        <a href="#" class="block p-4 border-b-2 border-gray-200"><h4 class="text-sm font-bold text-black text-justify">Kader PMII Ciptakan Aplikasi Edukasi Berbasis Aswaja untuk Generasi Z</h4></a>
-                        <a href="#" class="block p-4 border-b-2 border-gray-200"><h4 class="text-sm font-bold text-black text-justify">Refleksi Hari Lahir Pancasila: PMII Serukan Jaga Persatuan Bangsa</h4></a>
-                        <a href="#" class="block p-4 border-b-2 border-gray-200"><h4 class="text-sm font-bold text-black text-justify">Program Desa Binaan PMII Berhasil Tingkatkan Perekonomian Lokal</h4></a>
-                        <a href="#" class="block p-4 border-b-2 border-gray-200"><h4 class="text-sm font-bold text-black text-justify">PMII Bali Nusra Inisiatif Buat Aplikasi untuk PMII, Raup Dukungan Banyak Senior</h4></a>
-                        <a href="#" class="block p-4"><h4 class="text-sm font-bold text-black text-justify">Peluncuran Buku Antologi Puisi Kader, Wujud Gerakan Literasi PMII</h4></a>
+                        <a href="#" data-group="news-items" class="news-list-item animate-on-scroll slide-from-right zoom-on-click block p-4 border-b-2 border-gray-200" style="transition-delay: 200ms;"><h4 class="text-sm font-bold text-black text-justify">Kader PMII Ciptakan Aplikasi Edukasi Berbasis Aswaja untuk Generasi Z</h4></a>
+                        <a href="#" data-group="news-items" class="news-list-item animate-on-scroll slide-from-right zoom-on-click block p-4 border-b-2 border-gray-200" style="transition-delay: 400ms;"><h4 class="text-sm font-bold text-black text-justify">Refleksi Hari Lahir Pancasila: PMII Serukan Jaga Persatuan Bangsa</h4></a>
+                        <a href="#" data-group="news-items" class="news-list-item animate-on-scroll slide-from-right zoom-on-click block p-4 border-b-2 border-gray-200" style="transition-delay: 600ms;"><h4 class="text-sm font-bold text-black text-justify">Program Desa Binaan PMII Berhasil Tingkatkan Perekonomian Lokal</h4></a>
+                        <a href="#" data-group="news-items" class="news-list-item animate-on-scroll slide-from-right zoom-on-click block p-4 border-b-2 border-gray-200" style="transition-delay: 800ms;"><h4 class="text-sm font-bold text-black text-justify">PMII Bali Nusra Inisiatif Buat Aplikasi untuk PMII, Raup Dukungan Banyak Senior</h4></a>
+                        <a href="#" data-group="news-items" class="news-list-item animate-on-scroll slide-from-right zoom-on-click block p-4" style="transition-delay: 1000ms;"><h4 class="text-sm font-bold text-black text-justify">Peluncuran Buku Antologi Puisi Kader, Wujud Gerakan Literasi PMII</h4></a>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Akhir Section Berita -->
+        <!-- Akhir Section 3 -->
     </main>
     
     <!-- Awal Footer -->
@@ -220,7 +281,7 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <svg class="w-5 h-5 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                            <span>Jl. Catur Warga No. 9A, Pejanggik, Mataram Timur, Kota Mataram, NTB, Indonesia (83127)</span>
+                            <span>Jl. Catur Warga No. 9A, Kelurahan Pejanggik, Kecamatan Mataram Timur, Kota Mataram, Provinsi Nusa Tenggara Barat, Wilayah Bali Nusra, Indonesia (83127).</span>
                         </li>
                     </ul>
                 </div>
@@ -255,27 +316,89 @@
             const allMenuLinks = document.querySelectorAll('.menu-link, .mobile-menu-link');
             allMenuLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
-                    e.preventDefault(); // Mencegah pindah halaman untuk demo
+                    e.preventDefault(); 
                     
-                    // Hapus kelas 'active' dari semua link
                     document.querySelectorAll('.menu-link, .mobile-menu-link').forEach(l => l.classList.remove('active'));
-                    
-                    // Temukan link yang diklik dan indeksnya
                     const targetLink = e.currentTarget;
                     const index = Array.from(targetLink.parentElement.children).indexOf(targetLink);
-
-                    // Tambahkan kelas 'active' ke link yang sesuai di menu desktop dan mobile
                     document.querySelector(`.menu-link:nth-child(${index + 1})`)?.classList.add('active');
                     document.querySelector(`.mobile-menu-link:nth-child(${index + 1})`)?.classList.add('active');
 
-                    // Jika link mobile diklik, tutup menu mobile
                     if (targetLink.classList.contains('mobile-menu-link')) {
                         mobileMenu.classList.add('hidden');
                     }
                 });
             });
 
-            // Semua kode JavaScript untuk animasi telah dihapus.
+            // --- FUNGSI ANIMASI HITUNG NAIK ---
+            function animateCountUp(el) {
+                const target = +el.dataset.target;
+                if (el.dataset.animated) return; // Mencegah animasi berjalan lagi
+                el.dataset.animated = "true";
+
+                let current = 0;
+                const duration = 2000; // 2 detik
+                const increment = target / (duration / 16); // ~60fps
+
+                function updateCount() {
+                    current += increment;
+                    if (current < target) {
+                        el.innerText = `+${Math.ceil(current)}`;
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        el.innerText = `+${target}`;
+                    }
+                }
+                updateCount();
+            }
+
+            // --- LOGIKA ANIMASI GESER & HITUNG SAAT SCROLL ---
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+
+                        // Jika elemen adalah card pengurus, mulai animasi hitung
+                        if (entry.target.classList.contains('info-card')) {
+                            const numberEl = entry.target.querySelector('h2[data-target]');
+                            if (numberEl) {
+                                animateCountUp(numberEl);
+                            }
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1 
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+
+            // --- LOGIKA ANIMASI KLIK (ZOOM & GAYA) ---
+            document.body.addEventListener('click', function(e) {
+                const clickedElement = e.target.closest('.zoom-on-click');
+                if (!clickedElement) return;
+
+                if (clickedElement.tagName === 'A') {
+                    e.preventDefault();
+                }
+
+                const groupName = clickedElement.dataset.group;
+                if (groupName) {
+                    document.querySelectorAll(`.zoom-on-click[data-group="${groupName}"]`).forEach(item => {
+                        if (item !== clickedElement) {
+                            item.classList.remove('active');
+                        }
+                    });
+                }
+                
+                clickedElement.classList.toggle('active');
+            });
         });
     </script>
 
