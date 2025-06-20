@@ -3,685 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header dengan Hero Section dan Fitur</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- Menambahkan Font Awesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Halaman Website Lengkap</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Memuat Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Pengaturan Dasar Body */
+        /* Menggunakan font Inter sebagai default */
         body {
-            margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
+            scroll-behavior: smooth;
         }
 
-        /* Kontainer Utama Header */
-        .header-container {
-            background-image: linear-gradient(to right, #2918a9, #0973d6);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 100;
+        /* --- STYLING HEADER --- */
+        .menu-link, .mobile-menu-link { transition: all 0.2s ease-in-out; padding-bottom: 0.25rem; }
+        .menu-link.active, .mobile-menu-link.active { 
+            color: #ffcb05; 
+            font-weight: bold; 
+            border-bottom: 2px solid #ffcb05; 
+            transform: scale(1.1); /* Animasi Zoom Header */
         }
+        .mobile-menu-link.active { display: inline-block; }
 
-        /* Navigasi Menu (Desktop) */
-        .main-nav {
-            display: flex;
+        /* --- STYLING ANIMASI --- */
+        .zoom-on-click.active {
+            transform: scale(1.05); /* Animasi Zoom Umum */
         }
-
-        .main-nav ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .main-nav a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 500;
-            padding-bottom: 8px;
-            position: relative;
-            transition: transform 0.3s ease, color 0.3s ease;
-            display: inline-block;
-        }
-
-        .main-nav a:hover {
-            color: #ffcb05;
-            transform: scale(1.15);
-        }
-
-        .main-nav a.active {
-            color: #ffcb05;
-            font-weight: 700;
-        }
-
-        .main-nav a.active::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background-color: #ffcb05;
-            bottom: 0;
-            left: 0;
-            border-radius: 2px;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background-image: linear-gradient(to right, #2918a9, #0973d6);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-            height: 50vh; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            z-index: 1;
-        }
-
-        .hero-center-image {
-            height: 50%;
-            width: auto;
-            max-width: 90%;
-            object-fit: contain;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Tombol Hamburger */
-        .hamburger-menu {
-            display: none;
-            position: absolute;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 24px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 10;
-        }
-
-        .hamburger-menu span {
-            width: 30px;
-            height: 3px;
-            background: white;
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            position: relative;
-            transform-origin: 1px;
-        }
-
-        .hamburger-menu.active span:nth-child(1) { transform: rotate(45deg); }
-        .hamburger-menu.active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
-        .hamburger-menu.active span:nth-child(3) { transform: rotate(-45deg); }
-
-        /* Bagian Kartu Fitur (Features Section) */
-        .features-section {
-            padding: 80px 40px;
-            background-color: #ffffff;
-        }
-
-        .features-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .feature-card {
-            width: 25%;
-            background-color: #ffcb05;
-            padding: 40px 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(41, 24, 169, 0.05);
-            text-align: center;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            background-color: #0973d6;
-            transform: scale(1.05);
-            box-shadow: 0 12px 24px rgba(41, 24, 169, 0.2);
-        }
-
-        .feature-card:hover .card-number,
-        .feature-card:hover .card-title,
-        .feature-card:hover .card-subtitle {
-            color: #ffffff;
-        }
-
-        .feature-card:active {
-            transform: scale(1.1);
-            transition: transform 0.1s ease;
-        }
-
-        .feature-card .card-number {
-            font-size: 48px;
-            font-weight: 900;
-            color: #2918a9;
-            margin: 0;
-            transition: color 0.3s ease;
-        }
-
-        .feature-card .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin: 20px 0 5px 0;
-            transition: color 0.3s ease;
-        }
-
-        .feature-card .card-subtitle {
-            font-size: 12px;
-            color: #333;
-            margin: 0;
-            line-height: 1.5;
-            transition: color 0.3s ease;
-        }
-
-        /* Bagian Call to Action (CTA) dengan Kartu Biasa */
-        .cta-section {
-            padding: 80px 40px;
-            background-color: #ffffff;
-            overflow: hidden;
-        }
-
-        .cta-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5%;
-        }
-        
-        .cta-card-column {
-            width: 25%;
+        .slide-from-bottom, .slide-from-left, .slide-from-right {
             opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
+        .slide-from-bottom { transform: translateY(50px); }
+        .slide-from-left { transform: translateX(-50px); }
+        .slide-from-right { transform: translateX(50px); }
         
-        .cta-card-column.is-visible {
+        .is-visible {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) translateY(0);
         }
 
-        .cta-card {
-            width: 100%;
-            aspect-ratio: 1 / 2;
-            background-image: linear-gradient(to bottom, #2918a9, #0973d6);
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
+        /* --- STYLING CARD (BAGIAN 1) --- */
+        .info-card { background-color: #ffcb05; transition: transform 0.3s, background-color 0.3s; cursor: pointer; }
+        .info-card.active { background-color: #0973d6 !important; }
+        .info-card.active * { color: #ffffff; }
+
+        /* --- STYLING CARD (BAGIAN 2) --- */
+        .content-card { transition: transform 0.3s, background-color 0.3s; cursor: pointer; }
+        .content-card .icon-path, .content-card .playstore-icon { transition: all 0.3s; }
+        .content-card.yellow-card:hover, .content-card.yellow-card.active { background-color: #0973d6; }
+        .content-card.yellow-card:hover *, .content-card.yellow-card.active * { color: #ffffff; }
+        .content-card.yellow-card:hover .playstore-icon, .content-card.yellow-card.active .playstore-icon { filter: brightness(0) invert(1); }
+        .content-card.blue-card:hover, .content-card.blue-card.active { background-color: #ffcb05; }
+        .content-card.blue-card:hover *, .content-card.blue-card.active * { color: #000000; }
+        .content-card.blue-card:hover .icon-path, .content-card.blue-card.active .icon-path { stroke: #000000; }
         
-        .cta-card .fas {
-            font-size: 6rem;
-            opacity: 0.8;
-        }
-
-        .buttons-column {
-            width: 50%;
-        }
+        /* --- STYLING SECTION BERITA --- */
+        .news-card { transition: transform 0.3s, background-color 0.3s; cursor: pointer; }
+        .news-card:hover, .news-card.active { background-color: #0973d6; }
+        .news-card:hover *, .news-card.active * { color: #ffffff; }
+        .news-card:hover .meta-icon-path, .news-card.active .meta-icon-path { stroke: #ffffff; }
         
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .button-group {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, background-color 0.3s ease;
-            border-radius: 10px;
-        }
-        .button-group.is-visible {
-             opacity: 1;
-             transform: translateX(0);
-        }
-
-        .action-buttons .button-group:nth-child(2) { transition-delay: 0.2s; }
-        .action-buttons .button-group:nth-child(3) { transition-delay: 0.4s; }
-
-        .action-button {
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            border-radius: 10px;
-            padding: 15px 30px;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
-            justify-content: flex-start;
-        }
-        .action-button:active {
-             transform: scale(0.95);
-        }
-        
-        .btn-download {
-            background-color: #ffcb05;
-            color: #0973d6;
-            border: 2px solid #ffcb05;
-        }
-        .btn-download:hover {
-            background-color: #0973d6;
-            color: #ffffff;
-            border-color: #0973d6;
-        }
-        
-        .button-group-unified {
-            background-color: #0973d6;
-            padding: 20px 30px;
-            transition: background-color 0.3s ease;
-        }
-        .button-group-unified:hover {
-            background-color: #ffcb05;
-        }
-        .button-group-unified .action-button {
-             background-color: transparent;
-             border: none;
-             color: #ffffff;
-             padding: 0;
-        }
-        .button-group-unified .button-explanation {
-            font-size: 14px;
-            color: #ffffff;
-            margin: 10px 0 0;
-            text-align: justify;
-            padding-left: 28px;
-            transition: color 0.3s ease;
-        }
-        .button-group-unified:hover .action-button,
-        .button-group-unified:hover .button-explanation {
-            color: #0973d6;
-        }
-
-        /* Bagian Rilis Berita (News Release Section) */
-        .news-section {
-            padding: 80px 40px;
-            background-color: #ffffff;
-            overflow: hidden;
-        }
-
-        .news-container {
-            display: flex;
-            justify-content: center;
-            gap: 5%;
-        }
-
-        .news-card-column {
-            width: 25%;
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .news-card-column.is-visible {
-             opacity: 1;
-             transform: translateX(0);
-        }
-
-        .news-list-column {
-            width: 50%;
-        }
-
-        .news-list-column.is-visible .news-list li {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .news-card {
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.07);
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-card img {
-            width: 100%;
-            height: 60%;
-            display: block;
-            object-fit: cover;
-        }
-
-        .news-card-content {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-        }
-
-        .news-card-content h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            text-align: justify;
-        }
-
-        .news-meta {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px 15px;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .news-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .news-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .news-list li {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-
-        .news-list-column.is-visible .news-list li:nth-child(1) { transition-delay: 0.2s; }
-        .news-list-column.is-visible .news-list li:nth-child(2) { transition-delay: 0.3s; }
-        .news-list-column.is-visible .news-list li:nth-child(3) { transition-delay: 0.4s; }
-        .news-list-column.is-visible .news-list li:nth-child(4) { transition-delay: 0.5s; }
-        .news-list-column.is-visible .news-list li:nth-child(5) { transition-delay: 0.6s; }
-
-        .news-list li:last-child {
-            border-bottom: none;
-        }
-
-        .news-list a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            font-size: 12px;
-        }
-        
-        .news-list a:hover {
-            color: #0973d6;
-        }
-
-
-        /* Tampilan Mobile & Tablet */
-        @media (max-width: 768px) {
-            .header-container {
-                justify-content: flex-end;
-            }
-
-            .hamburger-menu {
-                display: flex;
-            }
-
-            .main-nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-image: linear-gradient(to right, #2918a9, #0973d6); 
-            }
-            
-            .main-nav.active {
-                display: flex;
-            }
-
-            .main-nav ul {
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-                padding: 20px 0;
-                gap: 20px;
-            }
-
-            .main-nav a:hover {
-                 transform: scale(1.1);
-            }
-
-            .hero-section {
-                height: 25vh;
-            }
-
-            .features-section, .cta-section, .news-section {
-                padding: 60px 20px;
-            }
-
-            .feature-card {
-                width: 75%;
-            }
-            
-            .cta-container, .news-container {
-                flex-direction: column;
-                gap: 40px;
-                align-items: center;
-            }
-
-            .cta-card-column, .buttons-column, .news-card-column, .news-list-column {
-                width: 75%;
-            }
-        }
+        .news-list-item { transition: transform 0.2s, color 0.2s; cursor: pointer; }
+        .news-list-item h4 { transition: color 0.2s; }
+        .news-list-item:hover, .news-list-item.active { transform: scale(1.03); } /* Animasi zoom pada list berita */
+        .news-list-item:hover h4, .news-list-item.active h4 { color: #0973d6; }
     </style>
 </head>
-<body>
+<body class="bg-white">
 
-    <header class="header-container">
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Release</a></li>
-            </ul>
+    <!-- Awal Header -->
+    <header id="app-header" class="bg-gradient-to-r from-[#2918a9] to-[#0973d6] shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-end md:justify-center">
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="menu-link active text-white text-lg">Home</a><a href="#" class="menu-link text-white text-lg">About</a><a href="#" class="menu-link text-white text-lg">Team</a><a href="#" class="menu-link text-white text-lg">Release</a>
+                </div>
+                <div class="md:hidden"><button id="hamburger-button" class="text-white focus:outline-none"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button></div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden h-[50vh] flex flex-col justify-center items-center gap-y-6">
+                <a href="#" class="mobile-menu-link active text-white text-lg">Home</a><a href="#" class="mobile-menu-link text-white text-lg">About</a><a href="#" class="mobile-menu-link text-white text-lg">Team</a><a href="#" class="mobile-menu-link text-white text-lg">Release</a>
+            </div>
         </nav>
-        <button class="hamburger-menu" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
     </header>
+    <!-- Akhir Header -->
 
-    <section class="hero-section">
-        <img src="https://placehold.co/400x200/ffffff/1c52a3?text=Logo+Anda" alt="Gambar Utama" class="hero-center-image" onerror="this.onerror=null;this.src='https://placehold.co/400x200/ff0000/ffffff?text=Error';">
-    </section>
+    <main>
+        <!-- Awal Hero Section -->
+        <section class="relative bg-gradient-to-r from-[#2918a9] to-[#0973d6] h-[25vh] md:h-[50vh] w-full overflow-hidden">
+            <div class="absolute inset-0 w-full h-full opacity-10"><img src="https://media.giphy.com/media/3o7TKSha51ATTx9K7u/giphy.gif" alt="Animasi Latar Belakang" class="w-full h-full object-cover"></div>
+            <div class="relative w-full h-full flex items-center justify-center"><img src="https://placehold.co/600x300/ffffff/000000?text=Gambar+Anda" alt="Gambar Utama Hero" class="h-1/2 w-auto"></div>
+        </section>
+        <!-- Akhir Hero Section -->
 
-    <section class="features-section">
-        <div class="features-container">
-            <div class="feature-card">
-                <p class="card-number" data-target="23">+0</p>
-                <h3 class="card-title">Pengurus Cabang</h3>
-                <p class="card-subtitle">Setingkat Kabupaten atau Kota</p>
-            </div>
-            <div class="feature-card">
-                <p class="card-number" data-target="47">+0</p>
-                <h3 class="card-title">Pengurus Komisariat</h3>
-                <p class="card-subtitle">Setingkat Kampus atau Institusi</p>
-            </div>
-            <div class="feature-card">
-                <p class="card-number" data-target="128">+0</p>
-                <h3 class="card-title">Pengurus Rayon</h3>
-                <p class="card-subtitle">Setingkat Fakultas atau Jurusan</p>
-            </div>
-        </div>
-    </section>
+        <!-- Awal Card Section 1 -->
+        <section id="card-section" class="py-16 md:py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6"><div class="flex flex-wrap justify-center items-center gap-8">
+                <div class="info-card zoom-on-click slide-from-bottom aspect-square text-black w-3/5 md:w-[30%] max-w-[300px] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center"><div><h2 class="text-5xl font-bold" data-target="17">+0</h2><h3 class="text-lg font-bold mt-2">PENGURUS CABANG</h3></div><p class="text-xs mt-4">Tingkat Kabupaten atau Kota</p></div>
+                <div class="info-card zoom-on-click slide-from-bottom aspect-square text-black w-3/5 md:w-[30%] max-w-[300px] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center" style="transition-delay: 200ms;"><div><h2 class="text-5xl font-bold" data-target="49">+0</h2><h3 class="text-lg font-bold mt-2">PENGURUS KOMISARIAT</h3></div><p class="text-xs mt-4">Tingkat Kampus atau Institusi</p></div>
+                <div class="info-card zoom-on-click slide-from-bottom aspect-square text-black w-3/5 md:w-[30%] max-w-[300px] rounded-lg shadow-xl p-6 text-center flex flex-col justify-center" style="transition-delay: 400ms;"><div><h2 class="text-5xl font-bold" data-target="136">+0</h2><h3 class="text-lg font-bold mt-2">PENGURUS RAYON</h3></div><p class="text-xs mt-4">Tingkat Fakultas atau Jurusan</p></div>
+            </div></div>
+        </section>
+        <!-- Akhir Card Section 1 -->
 
-    <section class="cta-section">
-        <div class="cta-container">
-            <div class="cta-card-column">
-                <div class="cta-card">
-                   <i class="fas fa-rocket"></i>
-                </div>
-            </div>
-            <div class="buttons-column">
-                <div class="action-buttons">
-                    <div class="button-group">
-                        <button class="action-button btn-download">
-                            <i class="fab fa-google-play"></i>
-                            <span>Download Sekarang</span>
-                        </button>
-                    </div>
-                    <div class="button-group button-group-unified">
-                        <button class="action-button">
-                            <i class="fas fa-images"></i>
-                            <span>Galeri Pergerakan</span>
-                        </button>
-                        <p class="button-explanation">Lihat dokumentasi berbagai kegiatan dan momen penting yang menginspirasi dan penuh semangat pergerakan.</p>
-                    </div>
-                    <div class="button-group button-group-unified">
-                        <button class="action-button">
-                            <i class="fas fa-file-alt"></i>
-                            <span>Produk Pergerakan</span>
-                        </button>
-                        <p class="button-explanation">Temukan berbagai karya dan produk intelektual hasil dari kajian mendalam dan kreativitas para kader pergerakan.</p>
+        <!-- Awal Section Info & Download -->
+        <section id="info-download-section" class="py-16 md:py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                <h1 class="text-2xl font-bold text-center text-black mb-12">Fitur Terbaik</h1>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                    <div class="w-3/5 md:w-[30%] flex justify-center slide-from-left"><img src="https://placehold.co/400x800/2918a9/ffffff?text=Gambar+2x1" alt="Gambar Produk" class="rounded-lg shadow-2xl w-full"></div>
+                    <div class="w-full md:w-[60%] flex flex-col items-center md:items-start gap-6">
+                        <div class="content-card zoom-on-click yellow-card group bg-[#ffcb05] w-11/12 md:w-full p-4 rounded-lg shadow-lg slide-from-right"><div class="flex items-center gap-4"><img src="https://images.icon-icons.com/1272/PNG/512/1497555625-social08_84889.png" alt="Google Play Icon" class="playstore-icon w-7 h-7 flex-shrink-0"><h3 class="text-lg font-bold text-black">Download Aplikasi</h3></div></div>
+                        <div class="content-card zoom-on-click blue-card group bg-[#0973d6] w-11/12 md:w-full p-4 rounded-lg shadow-lg slide-from-right" style="transition-delay: 200ms;"><div class="flex items-start gap-4"><svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path class="icon-path" stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"></path></svg><div class="flex-grow"><h3 class="text-lg font-bold text-white text-left">Galeri Pergerakan</h3><p class="text-xs text-white text-justify mt-2">Ruang dokumentasi dan apresiasi terhadap sejarah, perjuangan, serta dinamika kaderisasi PMII dari masa ke masa...</p></div></div></div>
+                        <div class="content-card zoom-on-click blue-card group bg-[#0973d6] w-11/12 md:w-full p-4 rounded-lg shadow-lg slide-from-right" style="transition-delay: 400ms;"><div class="flex items-start gap-4"><svg class="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" xmlns="http://www.w3.org/2000/svg"><path class="icon-path" stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"></path></svg><div class="flex-grow"><h3 class="text-lg font-bold text-white text-left">Produk Pergerakan</h3><p class="text-xs text-white text-justify mt-2">Hasil konkret dari proses kaderisasi, dialektika pemikiran, dan aksi sosial yang dilakukan oleh kader PMII...</p></div></div></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="news-section">
-        <div class="news-container">
-            <div class="news-card-column">
-                <div class="news-card">
-                    <img src="https://placehold.co/600x400/0973d6/ffffff?text=Gambar+Berita" alt="Gambar Berita Utama">
-                    <div class="news-card-content">
-                        <h3>Judul Berita Utama yang Cukup Panjang untuk Beberapa Baris</h3>
-                        <div class="news-meta">
-                            <div class="news-meta-item"><i class="fas fa-calendar-alt"></i><span>19 Juni 2025</span></div>
-                            <div class="news-meta-item"><i class="fas fa-eye"></i><span>1,234</span></div>
+        </section>
+        <!-- Akhir Section Info & Download -->
+
+        <!-- Awal Section Berita -->
+        <section id="news-section" class="py-16 md:py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                <h2 class="text-2xl font-bold text-center mb-12 text-black">Rilis Terbaru</h2>
+                <div class="flex flex-col md:flex-row items-center md:items-start justify-center gap-8">
+                    <!-- Kolom Kiri: Card Berita Utama -->
+                    <div class="w-11/12 md:w-[45%] flex justify-center slide-from-left">
+                        <div class="news-card zoom-on-click group w-full bg-white rounded-lg shadow-xl overflow-hidden aspect-square flex flex-col">
+                            <div class="w-full h-3/5"><img src="https://placehold.co/600x400/0973d6/ffffff?text=Gambar+Berita" alt="Gambar Berita Utama" class="w-full h-full object-cover"></div>
+                            <div class="p-6 flex flex-col justify-between flex-grow">
+                                <h3 class="text-lg font-bold text-black text-justify">PMII Sukses Gelar Konferensi Internasional...</h3>
+                                <div class="flex justify-center gap-6 mt-4 text-xs text-black">
+                                    <div class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path class="meta-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18"></path></svg><span>20 Jun 2025</span></div>
+                                    <div class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path class="meta-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639l4.43-7.087a2.022 2.022 0 0 1 1.63-.98h8.774c.665 0 1.259.349 1.63.98l4.43 7.087a1.012 1.012 0 0 1 0 .639l-4.43 7.087a2.022 2.022 0 0 1-1.63.98H8.135a2.022 2.022 0 0 1-1.63-.98L2.036 12.322Z"></path><path class="meta-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path></svg><span>1.2K Dilihat</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- Kolom Kanan: List Berita -->
+                    <div class="w-11/12 md:w-[45%] flex flex-col justify-center mt-8 md:mt-0">
+                        <div class="news-list-item zoom-on-click block p-4 border-b-2 border-gray-400 slide-from-right" style="transition-delay: 200ms;"><h4 class="text-lg font-bold text-black text-justify">Kader PMII Ciptakan Aplikasi Edukasi...</h4></div>
+                        <div class="news-list-item zoom-on-click block p-4 border-b-2 border-gray-400 slide-from-right" style="transition-delay: 400ms;"><h4 class="text-lg font-bold text-black text-justify">Refleksi Hari Lahir Pancasila...</h4></div>
+                        <div class="news-list-item zoom-on-click block p-4 border-b-2 border-gray-400 slide-from-right" style="transition-delay: 600ms;"><h4 class="text-lg font-bold text-black text-justify">Program Desa Binaan PMII Berhasil...</h4></div>
+                        <div class="news-list-item zoom-on-click block p-4 slide-from-right" style="transition-delay: 800ms;"><h4 class="text-lg font-bold text-black text-justify">Peluncuran Buku Antologi Puisi Kader...</h4></div>
+                    </div>
                 </div>
             </div>
-            <div class="news-list-column">
-                <ul class="news-list">
-                    <li><a href="#">Diskusi Publik: Arah Baru Gerakan Mahasiswa di Era Digital</a></li>
-                    <li><a href="#">Pelantikan Pengurus Cabang PMII Periode 2025-2026</a></li>
-                    <li><a href="#">Kader PMII Raih Juara 1 Lomba Esai Nasional</a></li>
-                    <li><a href="#">Refleksi Hari Lahir Pancasila: Menjaga Ideologi Bangsa</a></li>
-                    <li><a href="#">Program Kaderisasi Formal Mapaba Resmi Dibuka</a></li>
-                </ul>
+        </section>
+        <!-- Akhir Section Berita -->
+    </main>
+    
+    <!-- Awal Footer -->
+    <footer class="bg-gradient-to-r from-[#2918a9] to-[#0973d6] text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-center gap-12">
+                <!-- Kolom Kiri: Alamat -->
+                <div class="w-full md:w-[45%]">
+                    <h3 class="text-lg font-bold text-[#ffcb05] mb-4">Alamat</h3>
+                    <ul class="space-y-4 text-xs">
+                        <li class="flex items-center gap-3 border-b border-white pb-4">
+                             <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+                             <span>+62 877-5432-2362</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white pb-4">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                            <span>pkcbalinusra@gmail.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                            <span>Jl. Catur Warga No. 9A Kelurahan Pejanggik, Kecamatan Mataram Timur, Kota Mataram, Provinsi Nusa Tenggara Barat, Indonesia (83127)</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Kolom Kanan: Media Sosial -->
+                <div class="w-full md:w-[45%] mt-8 md:mt-0">
+                    <h3 class="text-lg font-bold text-[#ffcb05] mb-4">Media Sosial</h3>
+                    <ul class="space-y-4 text-xs">
+                        <li class="flex items-center gap-3 border-b border-white pb-4">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
+                            <span>PKC PMII Bali Nusra</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white pb-4">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm4.965-10.405c-.781 0-1.416.635-1.416 1.416s.635 1.416 1.416 1.416 1.416-.635 1.416-1.416-.635-1.416-1.416-1.416z"></path></svg>
+                            <span>@pkc.pmiibalinusra</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                           <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M21.582 6.186a2.693 2.693 0 0 0-1.888-1.888C18.068 4 12 4 12 4s-6.068 0-7.694.298a2.693 2.693 0 0 0-1.888 1.888C2 7.814 2 12 2 12s0 4.186.298 5.814a2.693 2.693 0 0 0 1.888 1.888C5.932 20 12 20 12 20s6.068 0 7.694-.298a2.693 2.693 0 0 0 1.888-1.888C22 16.186 22 12 22 12s0-4.186-.418-5.814zM9.999 15.199V8.801l5.207 3.199-5.207 3.2z"></path></svg>
+                            <span>PKC PMII Bali-Nusra</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-xs mt-12 pt-8 border-t border-white">
+                © 2025 - 2027 PKC PMII Bali Nusra.
             </div>
         </div>
-    </section>
-
-    <main style="padding: 40px; text-align: center; background-color: #ffffff;">
-        <h1>Konten Halaman Lainnya</h1>
-        <p>Ini adalah area untuk konten utama website Anda.</p>
-    </main>
+    </footer>
+    <!-- Akhir Footer -->
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Skrip untuk menu navigasi
-            const navLinks = document.querySelectorAll('.main-nav a');
-            const hamburger = document.querySelector('.hamburger-menu');
-            const mainNav = document.querySelector('.main-nav');
-
-            if (navLinks.length > 0) {
-                navLinks[0].classList.add('active');
-            }
-
-            navLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault(); 
-                    navLinks.forEach(navLink => navLink.classList.remove('active'));
-                    this.classList.add('active');
-                    if (window.innerWidth <= 768) {
-                        mainNav.classList.remove('active');
-                        hamburger.classList.remove('active');
-                    }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- LOGIKA HEADER ---
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            hamburgerButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            const allMenuLinks = document.querySelectorAll('.menu-link, .mobile-menu-link');
+            allMenuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.menu-link, .mobile-menu-link').forEach(l => l.classList.remove('active'));
+                    const targetLink = e.target.closest('a');
+                    const index = Array.from(targetLink.parentNode.children).indexOf(targetLink);
+                    document.querySelector(`.menu-link:nth-child(${index + 1})`)?.classList.add('active');
+                    document.querySelector(`.mobile-menu-link:nth-child(${index + 1})`)?.classList.add('active');
+                    if (targetLink.classList.contains('mobile-menu-link')) mobileMenu.classList.add('hidden');
                 });
             });
 
-            hamburger.addEventListener('click', function() {
-                this.classList.toggle('active');
-                mainNav.classList.toggle('active');
-            });
-
-            // Skrip untuk animasi hitung angka
-            const animateNumber = (element) => {
-                const target = parseInt(element.getAttribute('data-target'));
-                if (element.hasAttribute('data-animated')) return;
-                element.setAttribute('data-animated', 'true');
-
-                const duration = 2000;
-                let current = 0;
-                const stepTime = Math.max(10, Math.floor(duration / target));
-                
-                const timer = setInterval(() => {
-                    current += 1;
-                    element.innerText = `+${current}`;
-                    if (current >= target) {
-                        element.innerText = `+${target}`;
-                        clearInterval(timer);
-                    }
-                }, stepTime);
-            };
-
-            // Observer untuk memicu animasi saat elemen terlihat
-            const observerCallback = (entries, observer) => {
-                 entries.forEach(entry => {
+            // --- LOGIKA ANIMASI SCROLL (SLIDE & FADE) ---
+            const animatedElements = document.querySelectorAll('.slide-from-bottom, .slide-from-left, .slide-from-right');
+            const animationObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        
-                        if (entry.target.classList.contains('feature-card')) {
-                             const counter = entry.target.querySelector('.card-number');
-                             if (counter) {
-                                 animateNumber(counter);
-                             }
-                        } else {
-                            entry.target.classList.add('is-visible');
+                        entry.target.classList.add('is-visible');
+                        // Animasikan angka jika elemen adalah info-card
+                        if (entry.target.classList.contains('info-card')) {
+                            const titleEl = entry.target.querySelector('h2[data-target]');
+                            if (titleEl && !titleEl.dataset.animated) {
+                                titleEl.dataset.animated = true;
+                                const target = +titleEl.dataset.target;
+                                let current = 0;
+                                const duration = 2000;
+                                const stepTime = Math.abs(Math.floor(duration / target)) || 1;
+                                const timer = setInterval(() => {
+                                    current++;
+                                    titleEl.innerText = `+${current}`;
+                                    if (current >= target) {
+                                        titleEl.innerText = `+${target}`;
+                                        clearInterval(timer);
+                                    }
+                                }, stepTime);
+                            }
                         }
                         observer.unobserve(entry.target);
                     }
                 });
-            };
+            }, { threshold: 0.1 });
 
-            const observer = new IntersectionObserver(observerCallback, { threshold: 0.1 });
+            animatedElements.forEach(el => animationObserver.observe(el));
 
-            // Mengamati semua elemen yang perlu dianimasikan
-            const animatedElements = document.querySelectorAll('.feature-card, .cta-card-column, .button-group, .news-card-column, .news-list-column');
-            animatedElements.forEach(el => observer.observe(el));
+            // --- LOGIKA ANIMASI KLIK (ZOOM) ---
+            const zoomableElements = document.querySelectorAll('.zoom-on-click');
+            zoomableElements.forEach(el => {
+                el.addEventListener('click', (e) => {
+                    // Cek grup elemen untuk de-aktivasi
+                    if (el.classList.contains('info-card')) {
+                        document.querySelectorAll('.info-card').forEach(c => {
+                            if (c !== e.currentTarget) c.classList.remove('active');
+                        });
+                    } else if (el.classList.contains('content-card')) {
+                        document.querySelectorAll('.content-card').forEach(c => {
+                             if (c !== e.currentTarget) c.classList.remove('active');
+                        });
+                    } else if (el.classList.contains('news-card') || el.classList.contains('news-list-item')) {
+                        document.querySelectorAll('.news-card, .news-list-item').forEach(c => {
+                             if (c !== e.currentTarget) c.classList.remove('active');
+                        });
+                    }
+                    e.currentTarget.classList.toggle('active');
+                });
+            });
         });
     </script>
 
