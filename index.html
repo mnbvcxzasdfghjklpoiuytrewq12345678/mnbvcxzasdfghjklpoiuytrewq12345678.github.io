@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Website dengan Efek Klik (Perbaikan)</title>
+    <title>PMII Bali Nusra</title>
 
-    <!-- Memuat Font Inter dari Google Fonts -->
+    <!-- Unggah Font Inter dari Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Memuat Tailwind CSS dari CDN -->
+    <!-- Unggah Tailwind CSS dari CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Konfigurasi Kustom untuk Tailwind CSS -->
@@ -19,10 +19,10 @@
             theme: {
                 extend: {
                     colors: {
-                        // Mendefinisikan palet warna kustom untuk konsistensi
-                        'primary': '#0973d6', // Biru utama
+                        // Palet warna kustom untuk konsistensi
+                        'primary': '#0973d6',      // Biru utama
                         'primary-dark': '#2918a9', // Biru tua untuk gradien
-                        'accent': '#ffcb05', // Kuning sebagai aksen
+                        'accent': '#ffcb05',       // Kuning sebagai aksen
                     }
                 }
             }
@@ -30,12 +30,12 @@
     </script>
 
     <style>
-        /* Menggunakan font Inter sebagai font dasar untuk seluruh halaman */
+        /* Menggunakan font Inter sebagai font dasar */
         body {
             font-family: 'Inter', sans-serif;
         }
 
-        /* --- STYLING UNTUK MENU HEADER --- */
+        /* --- GAYA UNTUK MENU HEADER --- */
         .menu-link, .mobile-menu-link { 
             padding-bottom: 0.25rem; 
             transition: color 0.2s, border-color 0.2s;
@@ -45,59 +45,66 @@
             font-weight: bold; 
             border-bottom: 2px solid #ffcb05;
         }
-        .mobile-menu-link.active { display: inline-block; }
+        .mobile-menu-link.active { 
+            display: inline-block; 
+        }
 
-        /* --- STYLING ANIMASI ZOOM SAAT DIKLIK --- */
+        /* --- ANIMASI ZOOM SAAT DIKLIK --- */
         .zoom-on-click {
-            transition: transform 0.15s ease-in-out, background-color 0.2s, color 0.2s; 
+            transition: transform 0.1s ease-in-out, background-color 0.1s, color 0.1s; 
             cursor: pointer;
         }
         .zoom-on-click.active {
-            transform: scale(1.05);
+            transform: scale(1.00);
         }
 
-        /* --- STYLING ANIMASI GESER SAAT SCROLL --- */
+        /* --- ANIMASI GESER SAAT SCROLL --- */
         .slide-from-bottom, .slide-from-left, .slide-from-right {
             opacity: 0;
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
         .slide-from-bottom { transform: translateY(50px); }
         .slide-from-left { transform: translateX(-50px); }
         .slide-from-right { transform: translateX(50px); }
         
+        /* Kelas JavaScript saat elemen masuk ke viewport */
         .is-visible {
             opacity: 1;
             transform: none;
         }
         
-        /* --- GAYA 'HOVER' SAAT DIKLIK (ACTIVE STATE) --- */
+        /* --- GAYA ELEMEN 'AKTIF' SETELAH DIKLIK --- */
 
         /* 1. Card Pengurus */
+        /* Saat .active ditambahkan, warna latar belakang berubah menjadi biru */
         .info-card.active {
-            background-color: #0973d6 !important; /* !important untuk menimpa bg-accent */
+            background-color: #0973d6; 
         }
+        /* Semua teks di dalam card yang aktif menjadi putih */
         .info-card.active * {
              color: #ffffff;
         }
 
-        /* 2. Card Daftar Fitur 1 (Kuning) */
+        /* 2. Card Download (Kuning) */
         .yellow-card.active {
             background-color: #0973d6;
         }
         .yellow-card.active * {
             color: #ffffff;
         }
-         .yellow-card.active .playstore-icon {
+        /* Ikon playstore juga diubah menjadi putih */
+        .yellow-card.active .playstore-icon {
             filter: brightness(0) invert(1);
         }
 
-        /* 3. Card Daftar Fitur 2,3 (Biru) */
+        /* 3. Card Fitur Lainnya (Biru) */
         .blue-card.active {
             background-color: #ffcb05;
         }
         .blue-card.active * {
             color: #000000;
         }
+        /* Path di dalam SVG diubah menjadi hitam agar kontras */
         .blue-card.active .icon-path {
             stroke: #000000;
         }
@@ -110,7 +117,7 @@
             color: #ffffff;
         }
 
-        /* 5. Teks List Rilis */
+        /* 5. Item Daftar Rilis */
         .news-list-item.active h4 {
             color: #0973d6;
         }
@@ -122,23 +129,26 @@
     <header id="app-header" class="bg-gradient-to-r from-primary-dark to-primary shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-end md:justify-center">
+                <!-- Menu Desktop -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="menu-link active text-white text-lg">Home</a>
-                    <a href="#" class="menu-link text-white text-lg">About</a>
-                    <a href="#" class="menu-link text-white text-lg">Team</a>
-                    <a href="#" class="menu-link text-white text-lg">Release</a>
+                    <a href="index.html" class="menu-link active text-white text-lg" data-menu-item="home">Home</a>
+                    <a href="about.html" class="menu-link text-white text-lg" data-menu-item="about">About</a>
+                    <a href="team.html" class="menu-link text-white text-lg" data-menu-item="team">Team</a>
+                    <a href="release.html" class="menu-link text-white text-lg" data-menu-item="release">Release</a>
                 </div>
+                <!-- Tombol Hamburger untuk Mobile -->
                 <div class="md:hidden">
                     <button id="hamburger-button" class="text-white focus:outline-none" aria-label="Buka Menu">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
+            <!-- Menu Mobile (tersembunyi secara default) -->
             <div id="mobile-menu" class="hidden md:hidden h-[50vh] flex flex-col justify-center items-center gap-y-6">
-                <a href="#" class="mobile-menu-link active text-white text-lg">Home</a>
-                <a href="#" class="mobile-menu-link text-white text-lg">About</a>
-                <a href="#" class="mobile-menu-link text-white text-lg">Team</a>
-                <a href="#" class="mobile-menu-link text-white text-lg">Release</a>
+                <a href="index.html" class="mobile-menu-link active text-white text-lg" data-menu-item="home">Home</a>
+                <a href="about.html" class="mobile-menu-link text-white text-lg" data-menu-item="about">About</a>
+                <a href="team.html" class="mobile-menu-link text-white text-lg" data-menu-item="team">Team</a>
+                <a href="release.html" class="mobile-menu-link text-white text-lg" data-menu-item="release">Release</a>
             </div>
         </nav>
     </header>
@@ -147,11 +157,13 @@
     <main>
         <!-- Awal Hero Section -->
         <section class="relative bg-gradient-to-r from-primary-dark to-primary h-[29.17vh] md:h-[66.66vh] w-full overflow-hidden">
+            <!-- Latar belakang GIF dengan opasitas rendah -->
             <div class="absolute inset-0 w-full h-full opacity-10">
                 <img src="https://media.giphy.com/media/3o7TKSha51ATTx9K7u/giphy.gif" alt="Animasi Latar Belakang" class="w-full h-full object-cover">
             </div>
+            <!-- Konten utama di tengah -->
             <div class="relative w-full h-full flex items-center justify-center">
-                <img src="https://placehold.co/600x300/ffffff/000000?text=Logo+Anda" alt="Gambar Utama Hero" class="h-1/2 w-auto zoom-on-click" data-group="hero-image">
+                <img src="https://placehold.co/600x300/ffffff/000000?text=Logo+Organisasi" alt="Gambar Utama Hero" class="h-1/2 w-auto zoom-on-click" data-group="hero-image">
             </div>
         </section>
         <!-- Akhir Hero Section -->
@@ -187,7 +199,7 @@
                 </div>
             </div>
         </section>
-        <!-- Akhir Card Section 1 -->
+        <!-- Akhir Card Section Pengurus -->
 
         <!-- Awal Section Fitur Terbaik -->
         <section id="info-download-section" class="py-16 md:py-24 bg-white overflow-hidden">
@@ -196,14 +208,14 @@
                 <div class="flex flex-col md:flex-row items-center justify-center gap-12">
                     <!-- Gambar Mobile -->
                     <div data-group="content-items" class="animate-on-scroll slide-from-left zoom-on-click w-[50%] md:w-[15%] flex justify-center">
-                        <img src="https://placehold.co/400x800/2918a9/ffffff?text=App+Screenshot" alt="Gambar Produk" class="rounded-lg shadow-2xl w-full">
+                        <img src="https://placehold.co/400x800/2918a9/ffffff?text=App+Screenshot" alt="Gambar Tampilan Aplikasi" class="rounded-lg shadow-2xl w-full">
                     </div>
                     <!-- Daftar Fitur -->
                     <div class="w-full md:w-[75%] flex flex-col items-center md:items-start gap-6">
                         <!-- Card Download Aplikasi -->
                         <div data-group="content-items" class="yellow-card animate-on-scroll slide-from-right zoom-on-click bg-accent w-[90%] md:w-[30%] p-4 rounded-lg shadow-lg">
                             <div class="flex items-center gap-4 justify-center md:justify-start">
-                                <img src="https://images.icon-icons.com/1272/PNG/512/1497555625-social08_84889.png" alt="Google Play Icon" class="playstore-icon w-7 h-7 flex-shrink-0">
+                                <img src="https://images.icon-icons.com/1272/PNG/512/1497555625-social08_84889.png" alt="Ikon Google Play" class="playstore-icon w-7 h-7 flex-shrink-0">
                                 <h3 class="text-lg font-bold text-black">Download Aplikasi</h3>
                             </div>
                         </div>
@@ -231,7 +243,7 @@
                 </div>
             </div>
         </section>
-        <!-- Akhir Section 2 -->
+        <!-- Akhir Section Fitur Terbaik -->
 
         <!-- Awal Section Rilis Terbaru -->
         <section id="news-section" class="py-16 md:py-24 bg-white overflow-hidden">
@@ -260,7 +272,7 @@
                 </div>
             </div>
         </section>
-        <!-- Akhir Section 3 -->
+        <!-- Akhir Section Rilis Terbaru -->
     </main>
     
     <!-- Awal Footer -->
@@ -303,93 +315,114 @@
     <!-- Akhir Footer -->
 
     <script>
+        // Menjalankan skrip setelah seluruh konten HTML dimuat
         document.addEventListener('DOMContentLoaded', function () {
             
-            // --- LOGIKA UNTUK MENU HAMBURGER ---
+            // --- PENGELOLAAN MENU HAMBURGER ---
             const hamburgerButton = document.getElementById('hamburger-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            
             hamburgerButton.addEventListener('click', () => {
+                // Toggle (tampilkan/sembunyikan) menu mobile saat tombol diklik
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // --- LOGIKA UNTUK STATUS AKTIF PADA MENU ---
-            const allMenuLinks = document.querySelectorAll('.menu-link, .mobile-menu-link');
+            // --- PENGELOLAAN STATUS 'ACTIVE' PADA MENU NAVIGASI ---
+            const allMenuLinks = document.querySelectorAll('[data-menu-item]');
+            
             allMenuLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
+                    // Mencegah perilaku default dari tag <a> (seperti pindah halaman)
                     e.preventDefault(); 
                     
-                    document.querySelectorAll('.menu-link, .mobile-menu-link').forEach(l => l.classList.remove('active'));
-                    const targetLink = e.currentTarget;
-                    const index = Array.from(targetLink.parentElement.children).indexOf(targetLink);
-                    document.querySelector(`.menu-link:nth-child(${index + 1})`)?.classList.add('active');
-                    document.querySelector(`.mobile-menu-link:nth-child(${index + 1})`)?.classList.add('active');
+                    const menuItemName = e.currentTarget.dataset.menuItem;
 
-                    if (targetLink.classList.contains('mobile-menu-link')) {
+                    // 1. Hapus kelas 'active' dari semua link menu (desktop & mobile)
+                    allMenuLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // 2. Tambahkan kelas 'active' ke link yang diklik dan pasangannya
+                    //    (misal: jika 'Home' di mobile diklik, 'Home' di desktop juga aktif)
+                    const linksToActivate = document.querySelectorAll(`[data-menu-item="${menuItemName}"]`);
+                    linksToActivate.forEach(l => l.classList.add('active'));
+
+                    // 3. Jika link yang diklik adalah bagian dari menu mobile, sembunyikan menu setelah diklik
+                    if (e.currentTarget.classList.contains('mobile-menu-link')) {
                         mobileMenu.classList.add('hidden');
                     }
                 });
             });
 
-            // --- FUNGSI ANIMASI HITUNG NAIK ---
+            // --- FUNGSI ANIMASI HITUNG NAIK (COUNT-UP) ---
             function animateCountUp(el) {
-                const target = +el.dataset.target;
-                if (el.dataset.animated) return; // Mencegah animasi berjalan lagi
+                const target = +el.dataset.target; // Ambil nilai target dari atribut data-target
+                if (el.dataset.animated) return; // Mencegah animasi berjalan lebih dari sekali
                 el.dataset.animated = "true";
 
                 let current = 0;
-                const duration = 2000; // 2 detik
-                const increment = target / (duration / 16); // ~60fps
+                const duration = 2000; // Durasi animasi dalam milidetik (2 detik)
+                const increment = target / (duration / 16); // Hitung penambahan per frame (sekitar 60fps)
 
                 function updateCount() {
                     current += increment;
                     if (current < target) {
                         el.innerText = `+${Math.ceil(current)}`;
-                        requestAnimationFrame(updateCount);
+                        requestAnimationFrame(updateCount); // Lanjutkan animasi pada frame berikutnya
                     } else {
-                        el.innerText = `+${target}`;
+                        el.innerText = `+${target}`; // Pastikan nilai akhir sesuai target
                     }
                 }
                 updateCount();
             }
 
-            // --- LOGIKA ANIMASI GESER & HITUNG SAAT SCROLL ---
+            // --- LOGIKA ANIMASI SAAT SCROLL (INTERSECTION OBSERVER) ---
             const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            
+            // IntersectionObserver lebih efisien daripada event listener 'scroll'
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
+                    // Jika elemen masuk ke dalam area pandang (viewport)
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+                        entry.target.classList.add('is-visible'); // Tampilkan elemen dengan animasi geser
 
-                        // Jika elemen adalah card pengurus, mulai animasi hitung
+                        // Jika elemen yang muncul adalah card pengurus...
                         if (entry.target.classList.contains('info-card')) {
                             const numberEl = entry.target.querySelector('h2[data-target]');
                             if (numberEl) {
+                                // ...mulai animasi hitung naik.
                                 animateCountUp(numberEl);
                             }
                         }
                         
+                        // Hentikan pengamatan pada elemen ini setelah animasi dijalankan
                         observer.unobserve(entry.target);
                     }
                 });
             }, { 
-                threshold: 0.1 
+                threshold: 0.1 // Animasi dipicu saat 10% elemen terlihat
             });
 
+            // Terapkan observer ke setiap elemen yang perlu dianimasikan saat scroll
             animatedElements.forEach(el => {
                 observer.observe(el);
             });
 
 
-            // --- LOGIKA ANIMASI KLIK (ZOOM & GAYA) ---
+            // --- LOGIKA ANIMASI SAAT KLIK (ZOOM & PERUBAHAN GAYA) ---
+            // Menggunakan event delegation pada body untuk efisiensi
             document.body.addEventListener('click', function(e) {
+                // Cari elemen terdekat yang memiliki kelas .zoom-on-click dari target yang diklik
                 const clickedElement = e.target.closest('.zoom-on-click');
-                if (!clickedElement) return;
+                if (!clickedElement) return; // Jika tidak ada, hentikan fungsi
 
+                // Jika elemen yang diklik adalah link, cegah navigasi default agar efek klik terlihat
                 if (clickedElement.tagName === 'A') {
                     e.preventDefault();
                 }
 
+                // Logika untuk mengelola status 'active' dalam satu grup
                 const groupName = clickedElement.dataset.group;
                 if (groupName) {
+                    // Hapus kelas 'active' dari semua item lain dalam grup yang sama
                     document.querySelectorAll(`.zoom-on-click[data-group="${groupName}"]`).forEach(item => {
                         if (item !== clickedElement) {
                             item.classList.remove('active');
@@ -397,6 +430,7 @@
                     });
                 }
                 
+                // Toggle kelas 'active' pada elemen yang diklik
                 clickedElement.classList.toggle('active');
             });
         });
