@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RILIS!</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/cL8C7B7s/pkcpmibalinusra.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        .fade-in-out {
+            animation: fadeInOut 7s forwards;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(20px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+        }
+        input, textarea {
+             background-color: #f9fafb;
+        }
+        #image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 0.5rem;
+            border: 2px dashed #d1d5db;
+            padding: 0.5rem;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-900">
+
+    <main class="w-full max-w-3xl mx-auto p-6 md:p-8">
+        
+        <div class="text-center mb-8">
+             <h1 class="text-3xl font-bold text-gray-900">RILIS</h1>
+        </div>
+
+        <div class="space-y-10">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 border-b pb-2">ALAMAT</h2>
+                <div class="space-y-4 mt-4">
+                    <div>
+                        <label for="githubOwner" class="block text-sm font-medium text-gray-700">pmiibalinusra</label>
+                        <input type="text" id="githubOwner" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition">
+                    </div>
+                    <div>
+                        <label for="githubRepo" class="block text-sm font-medium text-gray-700">pmiibalinusra.github.io</label>
+                        <input type="text" id="githubRepo" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition">
+                    </div>
+                    <div>
+                        <label for="githubToken" class="block text-sm font-medium text-gray-700">kode rahasia</label>
+                        <input type="password" id="githubToken" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2">TULIS</h2>
+                <form id="create-release-form" class="space-y-4 mt-4">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700">Judul</label>
+                        <input type="text" id="title" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition">
+                    </div>
+                     <div>
+                        <label for="imageUpload" class="block text-sm font-medium text-gray-700">Gambar</label>
+                        <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/gif" required class="mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#e0e7ff] file:text-[#3730a3] hover:file:bg-[#c7d2fe]">
+                        <img id="image-preview" class="hidden mt-4" alt="Pratinjau Gambar"/>
+                    </div>
+                    <div>
+                        <label for="imageCaption" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                        <input type="text" id="imageCaption" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition">
+                    </div>
+                    <div>
+                        <label for="content" class="block text-sm font-medium text-gray-700">Isi</label>
+                        <textarea id="content" rows="12" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0973d6] transition"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" id="submit-button" class="w-full bg-gradient-to-r from-[#0973d6] to-[#2918a9] text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-all duration-300 active:scale-95 shadow-lg flex items-center justify-center mt-4">
+                            <span id="button-text">Publikasi</span>
+                            <svg id="loading-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="notification" class="fixed bottom-5 right-5 z-50 max-w-sm"></div>
+
+    <script type="module">
+        // --- Elemen DOM ---
+        const form = document.getElementById('create-release-form');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const notification = document.getElementById('notification');
+        const githubOwnerInput = document.getElementById('githubOwner');
+        const githubRepoInput = document.getElementById('githubRepo');
+        const imageUploadInput = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('image-preview');
+
+        // --- Fungsi Utilitas ---
+        const showNotification = (message, isError = false) => {
+            const bgColor = isError ? 'bg-red-600' : 'bg-green-600';
+            const notificationBox = document.createElement('div');
+            notificationBox.className = `fade-in-out ${bgColor} text-white text-sm font-bold px-4 py-3 rounded-lg shadow-xl`;
+            notificationBox.innerHTML = message;
+            notification.appendChild(notificationBox);
+            setTimeout(() => notificationBox.remove(), 7000);
+        };
+
+        const setButtonLoading = (isLoading) => {
+            submitButton.disabled = isLoading;
+            buttonText.classList.toggle('hidden', isLoading);
+            loadingSpinner.classList.toggle('hidden', !isLoading);
+        };
+        
+        const generateSlug = (title) => title.toLowerCase().split(' ').slice(0, 3).join('-').replace(/[^\w-]/g, '');
+
+        const saveGithubConfig = () => {
+            localStorage.setItem('githubOwner', githubOwnerInput.value);
+            localStorage.setItem('githubRepo', githubRepoInput.value);
+        };
+
+        const loadGithubConfig = () => {
+            githubOwnerInput.value = localStorage.getItem('githubOwner') || '';
+            githubRepoInput.value = localStorage.getItem('githubRepo') || '';
+        };
+
+        const getFileAsBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(file);
+            });
+        };
+
+        // --- Logika Inti: GitHub API ---
+        const uploadFileToGithub = async (fileContentBase64, filePath, commitMessage, config) => {
+            const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${filePath}`;
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${config.token}`, 'Accept': 'application/vnd.github.v3+json' },
+                    body: JSON.stringify({ message: commitMessage, content: fileContentBase64, branch: 'main' }),
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    return result;
+                } else {
+                    let errorMessage = `Gagal [${response.status}]: ${result.message}`;
+                    if (response.status === 401) errorMessage = "Gagal: Token GitHub tidak valid atau tidak memiliki izin 'repo'. Pastikan menggunakan Token (Classic) dengan scope 'repo'.";
+                    if (response.status === 404) errorMessage = "Gagal: Repositori atau user tidak ditemukan. Periksa kembali nama pengguna dan repositori.";
+                    if (response.status === 422) errorMessage = `Gagal: File "${filePath}" mungkin sudah ada. Coba gunakan judul yang sedikit berbeda.`;
+                    showNotification(errorMessage, true);
+                    return null;
+                }
+            } catch (error) {
+                showNotification("Gagal terhubung ke API GitHub. Periksa koneksi internet.", true);
+                return null;
+            }
+        };
+
+        const handleFormSubmit = async (e) => {
+            e.preventDefault();
+            
+            const githubConfig = {
+                owner: githubOwnerInput.value.trim(),
+                repo: githubRepoInput.value.trim(),
+                token: document.getElementById('githubToken').value.trim(),
+            };
+
+            if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) {
+                showNotification("Harap isi semua kolom Konfigurasi GitHub.", true);
+                return;
+            }
+
+            const imageFile = imageUploadInput.files[0];
+            if (!imageFile) {
+                showNotification("Harap pilih sebuah gambar untuk diunggah.", true);
+                return;
+            }
+            
+            if (imageFile.size > 1 * 1024 * 1024) {
+                 showNotification("Ukuran gambar terlalu besar. Harap pilih gambar di bawah 1MB.", true);
+                 return;
+            }
+
+            setButtonLoading(true);
+
+            const slug = generateSlug(document.getElementById('title').value);
+            const imageExtension = imageFile.name.split('.').pop();
+            const imageFileName = `${slug}.${imageExtension}`;
+            const imagePath = `assets/images/${imageFileName}`;
+            const imageBase64 = await getFileAsBase64(imageFile);
+            
+            showNotification("Mengunggah gambar...", false);
+            const imageUploadResult = await uploadFileToGithub(imageBase64, imagePath, `feat: unggah gambar ${imageFileName}`, githubConfig);
+
+            if (!imageUploadResult) {
+                showNotification("Proses dibatalkan karena gambar gagal diunggah. Pastikan folder 'assets/images' sudah ada di repositori Anda.", true);
+                setButtonLoading(false);
+                return;
+            }
+
+            const publicImageUrl = imageUploadResult.content.path;
+            showNotification("Gambar berhasil diunggah!", false);
+
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const imageCaption = document.getElementById('imageCaption').value;
+
+            const today = new Date();
+            const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            const postFileName = `${dateString}-${slug}.md`;
+            const postPath = `_posts/${postFileName}`;
+
+            const markdownContent = `---
+layout: post
+title: "${title.replace(/"/g, '\\"')}"
+date: ${today.toISOString()}
+image: /${publicImageUrl}
+caption: "${imageCaption.replace(/"/g, '\\"')}"
+---
+
+${content}`;
+            
+            const markdownBase64 = btoa(unescape(encodeURIComponent(markdownContent)));
+            
+            showNotification("Membuat postingan rilis...", false);
+            const postUploadResult = await uploadFileToGithub(markdownBase64, postPath, `feat: buat rilis '${title}'`, githubConfig);
+
+            if (postUploadResult) {
+                showNotification(`Rilis berhasil dibuat! Tunggu 1-2 menit hingga GitHub selesai membangun ulang situs. <a href="${postUploadResult.content.html_url}" target="_blank" class="underline font-bold">Lihat File</a>`, false);
+                form.reset();
+                imagePreview.classList.add('hidden');
+                document.getElementById('githubToken').value = '';
+            }
+
+            setButtonLoading(false);
+        };
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGithubConfig();
+            githubOwnerInput.addEventListener('input', saveGithubConfig);
+            githubRepoInput.addEventListener('input', saveGithubConfig);
+            form.addEventListener('submit', handleFormSubmit);
+
+            imageUploadInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        imagePreview.src = event.target.result;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
